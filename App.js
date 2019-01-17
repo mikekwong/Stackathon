@@ -1,21 +1,25 @@
+// import React, { Component } from 'react'
+// import AppNavigator from './components/AppNavigator'
+
+// export default class App extends Component {
+//   render () {
+//     return <AppNavigator />
+//   }
+// }
+
 import React, { Component, Fragment } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Button } from 'react-native'
 import { Font, Asset, AppLoading } from 'expo'
+import {
+  createAppContainer,
+  createStackNavigator,
+  StackActions,
+  NavigationActions
+} from 'react-navigation' // Version can be specified in package.json
+import GameScreen from './components/Game'
+import { styles } from './components/styles'
 
-const styles = StyleSheet.create({
-  blue: {
-    color: 'blue',
-    fontSize: 30,
-    fontFamily: 'Montserrat'
-  },
-  red: {
-    color: 'red',
-    fontSize: 35,
-    fontFamily: 'Montserrat-Bold'
-  }
-})
-
-export default class LotsOfStyles extends Component {
+class HomeScreen extends Component {
   constructor () {
     super()
     this.state = {
@@ -25,6 +29,7 @@ export default class LotsOfStyles extends Component {
   }
 
   async componentDidMount () {
+    // load fonts after initial render
     await Font.loadAsync({
       Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
       'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf')
@@ -33,6 +38,7 @@ export default class LotsOfStyles extends Component {
   }
 
   render () {
+    // If false set state to true and cache assets for future loads locally
     if (!this.state.isReady) {
       return (
         <AppLoading
@@ -42,29 +48,53 @@ export default class LotsOfStyles extends Component {
         />
       )
     }
+    // render view
     return (
-      <View style={{ flex: 1 }}>
-        <Image source={require('./assets/images/expo-icon.png')} />
-        <Image source={require('./assets/images/slack-icon.png')} />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {this.state.fontLoaded ? (
+          <Fragment>
+            <Text style={styles.blue}>Menu</Text>
+            <Button
+              title='Start Game'
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  StackActions.reset({
+                    index: 0,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'Game' })
+                    ]
+                  })
+                )
+              }}
+            />
+            <Image source={require('./assets/images/icon.png')} />
+          </Fragment>
+        ) : null}
       </View>
-      // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      //   {this.state.fontLoaded ? (
-      //     <Fragment>
-      //       <Text style={styles.blue}>Hello, world!</Text>
-      //       <Text style={styles.red}>Hello, now!</Text>
-      //     </Fragment>
-      //   ) : null}
-      // </View>
     )
   }
+  // async caching action for list of image assets
   async _cacheResourcesAsync () {
-    const images = [
-      require('./assets/images/expo-icon.png'),
-      require('./assets/images/slack-icon.png')
-    ]
+    const images = [require('./assets/images/icon.png')]
     const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync()
     })
     return Promise.all(cacheImages)
   }
 }
+
+const AppNavigator = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    },
+    Game: {
+      screen: props => <GameScreen />
+    }
+  },
+  {
+    initialRouteName: 'Home'
+  }
+)
+
+export default createAppContainer(AppNavigator)
