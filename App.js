@@ -1,12 +1,3 @@
-// import React, { Component } from 'react'
-// import AppNavigator from './components/AppNavigator'
-
-// export default class App extends Component {
-//   render () {
-//     return <AppNavigator />
-//   }
-// }
-
 import React, { Component, Fragment } from 'react'
 import { StyleSheet, Text, View, Image, Button } from 'react-native'
 import { Font, Asset, AppLoading } from 'expo'
@@ -83,6 +74,7 @@ class HomeScreen extends Component {
   }
 }
 
+// Game view
 class GameScreen extends Component {
   render () {
     return (
