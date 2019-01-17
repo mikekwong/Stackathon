@@ -16,7 +16,7 @@ import {
   StackActions,
   NavigationActions
 } from 'react-navigation' // Version can be specified in package.json
-import GameScreen from './components/Game'
+// import GameScreen from './components/Game'
 import { styles } from './components/styles'
 
 class HomeScreen extends Component {
@@ -83,13 +83,37 @@ class HomeScreen extends Component {
   }
 }
 
+class GameScreen extends Component {
+  render () {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Fragment>
+          <Text style={styles.blue}>Go To Home Screen</Text>
+          <Button
+            title='Return to Menu'
+            onPress={() => {
+              this.props.navigation.dispatch(
+                StackActions.reset({
+                  index: 0,
+                  actions: [NavigationActions.navigate({ routeName: 'Home' })]
+                })
+              )
+            }}
+          />
+          <Image source={require('./assets/images/icon.png')} />
+        </Fragment>
+      </View>
+    )
+  }
+}
+
 const AppNavigator = createStackNavigator(
   {
     Home: {
       screen: HomeScreen
     },
     Game: {
-      screen: props => <GameScreen />
+      screen: GameScreen
     }
   },
   {
