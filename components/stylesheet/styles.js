@@ -10,5 +10,9 @@ export const styles = StyleSheet.create({
     color: 'red',
     fontSize: 35,
     fontFamily: 'Montserrat-Bold'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
   }
 })

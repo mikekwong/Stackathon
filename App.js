@@ -9,7 +9,7 @@ import {
   NavigationActions
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
-import { styles } from './components/styles'
+// import { styles } from './components/styles'
 import Game from './components/Game'
 
 class HomeScreen extends Component {
