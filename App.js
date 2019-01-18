@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { StyleSheet, Text, View, Image, Button } from 'react-native'
+import { StyleSheet, Text, View, Image, StatusBar } from 'react-native'
 import { Font, Asset, AppLoading } from 'expo'
+import { Button } from 'react-native-elements'
 import {
   createAppContainer,
   createStackNavigator,
@@ -45,9 +46,19 @@ class HomeScreen extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {this.state.fontLoaded ? (
           <Fragment>
-            <Text style={styles.blue}>Menu</Text>
+            {/* <Text style={styles.blue}>Menu</Text> */}
             <Button
-              title='Start Game'
+              fontSize={40}
+              loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
+              buttonStyle={{
+                backgroundColor: 'rgba(92, 99,216, 1)',
+                width: 250,
+                height: 100,
+                borderColor: 'transparent',
+                borderWidth: 0,
+                borderRadius: 5
+              }}
+              title='Start'
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.reset({
@@ -60,6 +71,7 @@ class HomeScreen extends Component {
               }}
             />
             <Image source={require('./assets/images/cow.png')} />
+            <StatusBar hidden />
           </Fragment>
         ) : null}
       </View>
@@ -83,9 +95,11 @@ class GameScreen extends Component {
       <Fragment>
         <Game />
 
-        <Text style={styles.blue}>Go To Home Screen</Text>
+        {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
         <Button
-          title='Return to Menu'
+          fontSize={40}
+          backgroundColor='#841584'
+          title='Exit'
           onPress={() => {
             this.props.navigation.dispatch(
               StackActions.reset({
@@ -96,6 +110,7 @@ class GameScreen extends Component {
           }}
         />
         <Image source={require('./assets/images/cow.png')} />
+        <StatusBar hidden />
       </Fragment>
       // </View>
     )
@@ -112,7 +127,11 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'Home',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
   }
 )
 
