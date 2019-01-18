@@ -9,6 +9,7 @@ import {
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
 import { styles } from './components/styles'
+import Game from './components/Game'
 
 class HomeScreen extends Component {
   constructor () {
@@ -58,7 +59,7 @@ class HomeScreen extends Component {
                 )
               }}
             />
-            <Image source={require('./assets/images/icon.png')} />
+            <Image source={require('./assets/images/cow.png')} />
           </Fragment>
         ) : null}
       </View>
@@ -66,7 +67,7 @@ class HomeScreen extends Component {
   }
   // async caching action for list of image assets
   async _cacheResourcesAsync () {
-    const images = [require('./assets/images/icon.png')]
+    const images = [require('./assets/images/cow.png')]
     const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync()
     })
@@ -78,23 +79,25 @@ class HomeScreen extends Component {
 class GameScreen extends Component {
   render () {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Fragment>
-          <Text style={styles.blue}>Go To Home Screen</Text>
-          <Button
-            title='Return to Menu'
-            onPress={() => {
-              this.props.navigation.dispatch(
-                StackActions.reset({
-                  index: 0,
-                  actions: [NavigationActions.navigate({ routeName: 'Home' })]
-                })
-              )
-            }}
-          />
-          <Image source={require('./assets/images/icon.png')} />
-        </Fragment>
-      </View>
+      // <View style={{ flex: 1, alignItems: 'start' }}>
+      <Fragment>
+        <Game />
+
+        <Text style={styles.blue}>Go To Home Screen</Text>
+        <Button
+          title='Return to Menu'
+          onPress={() => {
+            this.props.navigation.dispatch(
+              StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Home' })]
+              })
+            )
+          }}
+        />
+        <Image source={require('./assets/images/cow.png')} />
+      </Fragment>
+      // </View>
     )
   }
 }

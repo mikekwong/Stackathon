@@ -16,20 +16,10 @@ export const ESCAPE_SCORE = 1
 export const MAX_MISSES = 5
 
 export const IMAGES = {
-  brown_bear: require('../../assets/images/brown_bear.png'),
-  cat: require('../../assets/images/cat.png'),
-  elephant: require('../../assets/images/elephant.png'),
-  fox: require('../../assets/images/fox.png'),
-  frog: require('../../assets/images/frog.png'),
-  hamster: require('../../assets/images/hamster.png'),
-  horse: require('../../assets/images/horse.png'),
-  moose: require('../../assets/images/moose.png'),
-  panda: require('../../assets/images/panda.png'),
-  penguin: require('../../assets/images/penguin.png'),
-  pig: require('../../assets/images/pig.png'),
-  polar_bear: require('../../assets/images/polar_bear.png'),
-  rabbit: require('../../assets/images/rabbit.png'),
-  wolf: require('../../assets/images/wolf.png')
+  bear: require('./assets/images/bear.png'),
+  buffalo: require('./assets/images/buffalo.png'),
+  chick: require('./assets/images/chick.png'),
+  chicken: require('./assets/images/chicken.png')
 }
 
 export const GUNS = [
