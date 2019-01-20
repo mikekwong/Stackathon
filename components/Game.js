@@ -7,10 +7,6 @@ import Circle from './entities/Circle'
 import { circle, rect, PopulateCircles } from './Utils'
 
 import Matter from 'matter-js'
-// import MatterAttractors from 'matter-attractors'
-
-// // Continue to apply forces on bodies
-// Matter.use(MatterAttractors)
 
 const { Engine, World, Bodies, Body, Events, Composite } = Matter
 
@@ -26,7 +22,9 @@ const Physics = (entities, { time }) => {
   return entities
 }
 
-const newCircle = circle(200, 100, circleSize)
+const circle1 = circle(200, 100, circleSize)
+const circle2 = circle(200, 200, circleSize)
+const circle3 = circle(200, 300, circleSize)
 
 const newBox = rect(
   width / 2,
@@ -39,6 +37,8 @@ const floor = rect(width / 2, 910, width, boxSize, true)
 const leftWall = rect(-40, 0, minWidth, height * 2, true)
 const rightWall = rect(440, 50, minWidth, height * 2, true)
 
+const floor1 = rect(width / 2, 120, width / 4, 40, true)
+
 // This creates a new Physics engine, it's a controller that manages updating the simulation of the world
 const engine = Engine.create()
 
@@ -46,7 +46,16 @@ const engine = Engine.create()
 const world = engine.world
 
 // Now add our box and floor to the world, taking in two params: a world, and an array of Matter.Bodies
-World.add(world, [newCircle, newBox, floor, leftWall, rightWall])
+World.add(world, [
+  circle1,
+  circle2,
+  circle3,
+  newBox,
+  floor,
+  floor1,
+  leftWall,
+  rightWall
+])
 
 export default class Game extends Component {
   render () {
@@ -60,9 +69,21 @@ export default class Game extends Component {
             engine: engine,
             world: world
           },
-          newCircle: {
-            body: newCircle,
-            size: [circleSize, circleSize],
+          circle1: {
+            body: circle1,
+            size: [circleSize * 2, circleSize * 2],
+            color: 'red',
+            renderer: Circle
+          },
+          circle2: {
+            body: circle2,
+            size: [circleSize * 2, circleSize * 2],
+            color: 'red',
+            renderer: Circle
+          },
+          circle3: {
+            body: circle3,
+            size: [circleSize * 2, circleSize * 2],
             color: 'red',
             renderer: Circle
           },
@@ -75,6 +96,12 @@ export default class Game extends Component {
           floor: {
             body: floor,
             size: [width, boxSize],
+            color: 'green',
+            renderer: Box
+          },
+          floor1: {
+            body: floor1,
+            size: [width / 2, 40],
             color: 'green',
             renderer: Box
           },

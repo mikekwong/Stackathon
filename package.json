@@ -8,15 +8,13 @@
   },
   "dependencies": {
     "expo": "^32.0.0",
-    "matter-attractors": "^0.1.6",
     "matter-js": "^0.14.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
     "react-native-game-engine": "^0.10.1",
     "react-navigation": "^3.0.9",
-    "redux-persist": "^5.10.0",
-    "rn-sprite-sheet": "^1.1.1"
+    "redux-persist": "^5.10.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

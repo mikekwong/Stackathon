@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { array, object, string } from 'prop-types'
 
-const RADIUS = 30
+// const RADIUS = 30
 
 export default class Circle extends Component {
   render () {
+    const RADIUS = this.props.size[0]
     const x = this.props.body.position.x - RADIUS / 2
     const y = this.props.body.position.y - RADIUS / 2
+
     return (
       <View
         style={{
@@ -16,8 +18,8 @@ export default class Circle extends Component {
           position: 'absolute',
           borderWidth: 0,
           borderRadius: RADIUS * 2,
-          width: RADIUS * 2,
-          height: RADIUS * 2,
+          width: RADIUS,
+          height: RADIUS,
           backgroundColor: this.props.color || 'blue'
         }}
       />
