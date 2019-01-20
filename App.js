@@ -98,6 +98,16 @@ class GameScreen extends Component {
         {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
         <Button
           fontSize={40}
+          buttonStyle={{
+            backgroundColor: 'rgba(92, 99,216, 1)',
+            width: 250,
+            height: 100,
+            borderColor: 'transparent',
+            borderWidth: 0,
+            borderRadius: 5,
+            position: 'relative',
+            top: -600
+          }}
           backgroundColor='#841584'
           title='Exit'
           onPress={() => {
@@ -109,7 +119,7 @@ class GameScreen extends Component {
             )
           }}
         />
-        <Image source={require('./assets/images/cow.png')} />
+        {/* <Image source={require('./assets/images/cow.png')} /> */}
         <StatusBar hidden />
       </Fragment>
       // </View>
