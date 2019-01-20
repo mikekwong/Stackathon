@@ -22,9 +22,9 @@ const Physics = (entities, { time }) => {
   return entities
 }
 
-const circle1 = circle(200, 100, circleSize)
-const circle2 = circle(200, 200, circleSize)
-const circle3 = circle(200, 300, circleSize)
+const circle1 = circle(200, 120, circleSize)
+const circle2 = circle(200, 290, circleSize)
+const circle3 = circle(200, 460, circleSize)
 
 const newBox = rect(
   width / 2,
@@ -33,11 +33,37 @@ const newBox = rect(
   boxSize // height
 )
 
-const floor = rect(width / 2, 910, width, boxSize, true)
+const floor = rect(width / 2, 910, width, boxSize, true, 0)
 const leftWall = rect(-40, 0, minWidth, height * 2, true)
 const rightWall = rect(440, 50, minWidth, height * 2, true)
 
-const floor1 = rect(width / 2, 120, width / 4, 40, true)
+const floor1 = rect(
+  width / 2 - 50,
+  180,
+  width / 1.5,
+  20,
+  true,
+  Math.PI * 0.06,
+  0.001
+)
+const floor2 = rect(
+  width / 2 - 50,
+  350,
+  width / 1.5,
+  20,
+  true,
+  Math.PI * 0.06,
+  0.0005
+)
+const floor3 = rect(
+  width / 2 - 50,
+  520,
+  width / 1.5,
+  20,
+  true,
+  Math.PI * 0.06,
+  0
+)
 
 // This creates a new Physics engine, it's a controller that manages updating the simulation of the world
 const engine = Engine.create()
@@ -53,6 +79,8 @@ World.add(world, [
   newBox,
   floor,
   floor1,
+  floor2,
+  floor3,
   leftWall,
   rightWall
 ])
@@ -72,19 +100,19 @@ export default class Game extends Component {
           circle1: {
             body: circle1,
             size: [circleSize * 2, circleSize * 2],
-            color: 'red',
+            color: '#FF5733',
             renderer: Circle
           },
           circle2: {
             body: circle2,
             size: [circleSize * 2, circleSize * 2],
-            color: 'red',
+            color: '#FF5733',
             renderer: Circle
           },
           circle3: {
             body: circle3,
             size: [circleSize * 2, circleSize * 2],
-            color: 'red',
+            color: '#FF5733',
             renderer: Circle
           },
           newBox: {
@@ -97,24 +125,42 @@ export default class Game extends Component {
             body: floor,
             size: [width, boxSize],
             color: 'green',
+            angle: 0,
             renderer: Box
           },
           floor1: {
             body: floor1,
-            size: [width / 2, 40],
-            color: 'green',
+            size: [width / 1.5, 40],
+            color: '#33DDFF',
+            angle: Math.PI * 0.06,
+            renderer: Box
+          },
+          floor2: {
+            body: floor2,
+            size: [width / 1.5, 40],
+            color: '#33DDFF',
+            angle: Math.PI * 0.06,
+            renderer: Box
+          },
+          floor3: {
+            body: floor3,
+            size: [width / 1.5, 40],
+            color: '#33DDFF',
+            angle: Math.PI * 0.06,
             renderer: Box
           },
           leftWall: {
             body: leftWall,
             size: [minWidth, height * 2],
             color: 'green',
+            angle: 0,
             renderer: Box
           },
           rightWall: {
             body: rightWall,
             size: [minWidth, height * 2],
             color: 'green',
+            angle: 0,
             renderer: Box
           }
         }}

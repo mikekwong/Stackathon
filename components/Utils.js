@@ -10,10 +10,12 @@ const circle = (x, y, r, staticOrNot = false) => {
   })
 }
 
-const rect = (x, y, w, h, staticOrNot = false) => {
+const rect = (x, y, w, h, staticOrNot = false, rotate, frVal) => {
   return Bodies.rectangle(x, y, w, h, {
     isStatic: staticOrNot,
-    restitution: 1
+    restitution: 1,
+    angle: rotate,
+    friction: frVal
   })
 }
 

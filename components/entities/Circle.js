@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
 import { array, object, string } from 'prop-types'
 
 // const RADIUS = 30
@@ -22,7 +22,9 @@ export default class Circle extends Component {
           height: RADIUS,
           backgroundColor: this.props.color || 'blue'
         }}
-      />
+      >
+        {/* <Image source={require('../../assets/images/football.png')} /> */}
+      </View>
     )
   }
 }

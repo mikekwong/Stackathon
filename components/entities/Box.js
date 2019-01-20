@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { array, object, string } from 'prop-types'
+import { array, object, string, number } from 'prop-types'
 
 export default class Box extends Component {
   render () {
@@ -8,6 +8,7 @@ export default class Box extends Component {
     const height = this.props.size[1]
     const x = this.props.body.position.x - width / 2
     const y = this.props.body.position.y - height / 2
+    const angle = this.props.angle
 
     return (
       <View
@@ -17,6 +18,7 @@ export default class Box extends Component {
           top: y,
           width: width,
           height: height,
+          transform: [{ rotateZ: `${angle}rad` }],
           backgroundColor: this.props.color || 'pink'
         }}
       />
@@ -27,5 +29,6 @@ export default class Box extends Component {
 Box.propTypes = {
   size: array,
   body: object,
-  color: string
+  color: string,
+  angle: number
 }
