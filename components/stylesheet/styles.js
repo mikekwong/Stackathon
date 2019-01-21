@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
-  blue: {
-    color: 'blue',
-    fontSize: 30,
-    fontFamily: 'Montserrat'
+  title: {
+    color: '#1BC897',
+    fontSize: 60,
+    fontFamily: 'Stack'
   },
   red: {
     color: 'red',
     fontSize: 35,
-    fontFamily: 'Montserrat-Bold'
+    fontFamily: 'Stack'
   },
   container: {
     flex: 1,

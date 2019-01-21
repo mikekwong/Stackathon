@@ -1,158 +1,128 @@
 import React, { Component, Fragment } from 'react'
 import { Text, Dimensions, AppRegistry, StyleSheet } from 'react-native'
 import { GameEngine } from 'react-native-game-engine'
-import { Physics, CreateBox, MoveBox, garbageCollection } from './Systems'
+import {
+  Physics,
+  CreateBox,
+  MoveBox,
+  WinCondition,
+  GarbageCollection,
+  boxCount,
+  tossed
+} from './Systems'
 import Box from './Box'
 import Matter from 'matter-js'
+
+const { Engine, World, Bodies, Body, Events, Composite, Constraint } = Matter
+
+const { width, height } = Dimensions.get('screen')
+const boxSize = Math.trunc(Math.max(width, height) * 0.075)
+
+const engine = Engine.create({ enableSleeping: false })
+const world = engine.world
+const square = Bodies.rectangle(101, 100, boxSize, boxSize, {
+  frictionAir: 0.021
+})
+const platform = Bodies.rectangle(100, 200, width / 4, 40, {
+  isStatic: true
+})
+const floorWidth = width / 6
+const floorHeight = boxSize * 3
+const floor = Bodies.rectangle(
+  width / 2,
+  height - boxSize / 2,
+  floorWidth,
+  floorHeight,
+  { isStatic: true }
+)
+const constraint = Constraint.create({
+  label: 'Drag Constraint',
+  pointA: { x: 0, y: 0 },
+  pointB: { x: 0, y: 0 },
+  length: 0.01,
+  stiffness: 0.1,
+  angularStiffness: 1
+})
+
+World.add(world, [platform, square, floor])
+World.addConstraint(world, constraint)
 
 export default class Game extends Component {
   constructor () {
     super()
     this.state = {
-      currentCount: 0,
-      intervalId: 0
+      win: '',
+      discarded: 0
     }
   }
-  // const minWidth = 50
-  // // make box size at fraction of maximum screen size // trunc removes fractions
-  // const boxSize = Math.trunc(Math.max(width, height) * 0.075)
-  // const circleSize = 30
 
-  // const Physics = (entities, { time }) => {
-  //   let engine = entities['physics'].engine
-  //   Engine.update(engine, time.delta)
-  //   return entities
-  // }
+  componentDidMount () {
+    // Events.on(engine, 'afterUpdate', function() { ... });
+    this.interval = setInterval(() => this.tick(), 100)
+  }
 
-  // const circle1 = circle(200, 120, circleSize)
-  // const circle2 = circle(200, 290, circleSize)
-  // const circle3 = circle(200, 460, circleSize)
+  componentWillUnmount () {
+    clearInterval(this.interval)
+    // World.clear(engine.world)
+    // Engine.clear(engine)
+  }
 
-  // const newBox = rect(
-  //   width / 2,
-  //   height / 2,
-  //   boxSize, // width
-  //   boxSize // height
-  // )
-
-  // const floor = rect(width / 2, 910, width, boxSize, true, 0)
-  // const leftWall = rect(-40, 0, minWidth, height * 2, true)
-  // const rightWall = rect(440, 50, minWidth, height * 2, true)
-
-  // const floor1 = rect(
-  //   width / 2 - 50,
-  //   180,
-  //   width / 1.5,
-  //   20,
-  //   true,
-  //   Math.PI * 0.06,
-  //   0.001
-  // )
-  // const floor2 = rect(
-  //   width / 2 - 50,
-  //   350,
-  //   width / 1.5,
-  //   20,
-  //   true,
-  //   Math.PI * 0.06,
-  //   0.0005
-  // )
-  // const floor3 = rect(
-  //   width / 2 - 50,
-  //   520,
-  //   width / 1.5,
-  //   20,
-  //   true,
-  //   Math.PI * 0.06,
-  //   0
-  // )
-
-  // // This creates a new Physics engine, it's a controller that manages updating the simulation of the world
-  // const engine = Engine.create()
-
-  // // this will create a world that will contain all simulated bodies and constraints
-  // const world = engine.world
-
-  // // Now add our box and floor to the world, taking in two params: a world, and an array of Matter.Bodies
-  // World.add(world, [
-  //   circle1,
-  //   circle2,
-  //   circle3,
-  //   newBox,
-  //   floor,
-  //   floor1,
-  //   floor2,
-  //   floor3,
-  //   leftWall,
-  //   rightWall
-  // ])
+  tick (props) {
+    if (
+      square.position.y < height / 2 &&
+      this.state.discarded < 4 &&
+      boxCount > 5
+    ) {
+      this.setState({
+        win: 'you win',
+        score: this.props.score + 1
+      })
+    } else {
+      this.setState({
+        win: 'you lose'
+      })
+    }
+    this.setState(state => ({
+      discarded: (state.discarded = tossed)
+    }))
+    // if (this.state.discarded === 4) {
+    //   this.componentWillUnmount()
+    // }
+  }
 
   render () {
-    const {
-      Engine,
-      World,
-      Bodies,
-      Body,
-      Events,
-      Composite,
-      Constraint
-    } = Matter
-
-    const { width, height } = Dimensions.get('screen')
-    const boxSize = Math.trunc(Math.max(width, height) * 0.075)
-
-    const engine = Engine.create({ enableSleeping: false })
-    const world = engine.world
-    const body = Bodies.rectangle(width / 2, -1000, boxSize, boxSize, {
-      frictionAir: 0.021
-    })
-    // const line = Bodies.rectangle(100, 600, width, 1, { isStatic: true })
-    const floor = Bodies.rectangle(
-      width / 2,
-      height - boxSize / 2,
-      width / 2,
-      boxSize,
-      { isStatic: true }
-    )
-    const constraint = Constraint.create({
-      label: 'Drag Constraint',
-      pointA: { x: 0, y: 0 },
-      pointB: { x: 0, y: 0 },
-      length: 0.01,
-      stiffness: 0.1,
-      angularStiffness: 1
-    })
-
-    World.add(world, [body, floor])
-    World.addConstraint(world, constraint)
-
     return (
       <Fragment>
-        <Text style={{ fontSize: 20, left: 190, top: 80 }}>Timer</Text>
+        <Text style={{ fontSize: 20, left: 190, top: 80 }}>
+          {this.state.win} Discarded: {this.state.discarded}
+        </Text>
         <GameEngine
           // style={styles.container}
-          systems={[Physics, CreateBox, MoveBox, garbageCollection]}
+          systems={[
+            Physics,
+            CreateBox,
+            MoveBox,
+            WinCondition,
+            GarbageCollection
+          ]}
           entities={{
             physics: { engine: engine, world: world, constraint: constraint },
-            // line: {
-            //   body: line,
-            //   size: [width, 1],
-            //   color: 'red',
-            //   renderer: Box
-            // },
-            box: {
-              body: body,
-              size: [
-                Math.floor(Math.random() * 40),
-                Math.floor(Math.random() * 40)
-              ],
-              color: 'black',
+            platform: {
+              body: platform,
+              size: [width / 4, 40],
+              color: '#C6C6C6',
+              renderer: Box
+            },
+            square: {
+              body: square,
+              size: [boxSize, boxSize],
+              color: 'blue',
               renderer: Box
             },
             floor: {
               body: floor,
-              size: [width / 2, boxSize],
-              color: '#00D5FF',
+              size: [floorWidth, floorHeight],
+              color: '#000',
               renderer: Box
             }
           }}

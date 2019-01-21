@@ -7,9 +7,9 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    // "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/owl.png",
+      // "image": "./assets/images/owl.png",
       "resizeMode": "contain",
       "backgroundColor": "#C0C0C0"
     },

@@ -14,11 +14,13 @@ const Physics = (state, { touches, time }) => {
   return state
 }
 
+let boxCount = 0
+
 const CreateBox = (state, { touches, screen }) => {
   let world = state['physics'].world
   let boxSize = Math.trunc(Math.max(screen.width, screen.height) * 0.075)
-  let randomWidth = Math.floor(Math.random() * 80)
-  let randomHeight = Math.floor(Math.random() * 80)
+  let randomWidth = Math.floor(Math.random() * 80 + 20)
+  let randomHeight = Math.floor(Math.random() * 80 + 20)
 
   touches
     .filter(t => t.type === 'press')
@@ -35,9 +37,10 @@ const CreateBox = (state, { touches, screen }) => {
       state[++boxIds] = {
         body: body,
         size: [randomWidth, randomHeight],
-        color: boxIds % 2 === 0 ? 'gray' : '#000',
+        color: boxIds % 2 === 0 ? '#02D5FF' : '#FF0064',
         renderer: Box
       }
+      boxCount = Object.keys(state).length
     })
 
   return state
@@ -85,14 +88,37 @@ const MoveBox = (state, { touches }) => {
   return state
 }
 
-const garbageCollection = (state, { touches, screen }) => {
+const WinCondition = (state, { touches, screen }) => {
   let world = state['physics'].world
 
   Object.keys(state)
     .filter(
-      key => state[key].body && state[key].body.position.y > screen.height * 2
+      key =>
+        state[key].body &&
+        state[key].body.position.y < screen.height / 2 &&
+        state[key].body.position.y > screen.height / 2 - 100
     )
     .forEach(key => {
+      state[key].color = 'gray'
+    })
+
+  return state
+}
+
+let tossed = 0
+
+const GarbageCollection = (state, { touches, screen }) => {
+  let world = state['physics'].world
+
+  Object.keys(state)
+    .filter(
+      key =>
+        state[key].body &&
+        state[key].body.position.y > screen.height &&
+        state[key].body.position.x > screen.width
+    )
+    .forEach(key => {
+      tossed += 1
       Matter.Composite.remove(world, state[key].body)
       delete state[key]
     })
@@ -100,4 +126,12 @@ const garbageCollection = (state, { touches, screen }) => {
   return state
 }
 
-export { Physics, CreateBox, MoveBox, garbageCollection }
+export {
+  Physics,
+  CreateBox,
+  MoveBox,
+  WinCondition,
+  GarbageCollection,
+  boxCount,
+  tossed
+}

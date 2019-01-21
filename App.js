@@ -5,7 +5,8 @@ import {
   View,
   Image,
   StatusBar,
-  AppRegistry
+  AppRegistry,
+  ImageBackground
 } from 'react-native'
 import { Font, Asset, AppLoading } from 'expo'
 import { Button } from 'react-native-elements'
@@ -16,7 +17,7 @@ import {
   NavigationActions
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
-// import { styles } from './components/styles'
+import { styles } from './components/stylesheet/styles'
 import Game from './components/Game'
 class HomeScreen extends Component {
   constructor () {
@@ -30,8 +31,7 @@ class HomeScreen extends Component {
   async componentDidMount () {
     // load fonts after initial render
     await Font.loadAsync({
-      Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
-      'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf')
+      Stack: require('./assets/fonts/Stack.ttf')
     })
     this.setState({ fontLoaded: true })
   }
@@ -49,13 +49,23 @@ class HomeScreen extends Component {
     }
     // render view
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         {this.state.fontLoaded ? (
           <Fragment>
-            {/* <Text style={styles.blue}>Menu</Text> */}
+            <Text style={styles.title}>STACK-A-THON</Text>
             <Button
-              fontSize={40}
-              loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
+              fontFamily='Stack'
+              fontSize={80}
+              loadingProps={{
+                size: 'large',
+                color: 'rgba(111, 202, 186, 1)'
+              }}
               buttonStyle={{
                 backgroundColor: 'rgba(92, 99,216, 1)',
                 width: 250,
@@ -76,7 +86,6 @@ class HomeScreen extends Component {
                 )
               }}
             />
-            <Image source={require('./assets/images/cow.png')} />
             <StatusBar hidden />
           </Fragment>
         ) : null}
@@ -84,27 +93,34 @@ class HomeScreen extends Component {
     )
   }
   // async caching action for list of image assets
-  async _cacheResourcesAsync () {
-    const images = [require('./assets/images/cow.png')]
-    const cacheImages = images.map(image => {
-      return Asset.fromModule(image).downloadAsync()
-    })
-    return Promise.all(cacheImages)
-  }
+  // async _cacheResourcesAsync () {
+  //   const images = [require('./assets/images/8196.jpg')]
+  //   const cacheImages = images.map(image => {
+  //     return Asset.fromModule(image).downloadAsync()
+  //   })
+  //   return Promise.all(cacheImages)
+  // }
 }
 
 // Game view
 class GameScreen extends Component {
+  constructor () {
+    super()
+    this.state = {
+      score: 0
+    }
+  }
   render () {
     return (
       // <View style={{ flex: 1, alignItems: 'start' }}>
       <Fragment>
-        <Game />
+        <Game score={this.state.score} />
         <Button
-          fontSize={20}
+          fontFamily='Stack'
+          fontSize={30}
           buttonStyle={{
             position: 'absolute',
-            backgroundColor: 'rgba(92, 99,216, 1)',
+            backgroundColor: 'black',
             width: 80,
             height: 50,
             borderColor: 'transparent',
@@ -127,7 +143,7 @@ class GameScreen extends Component {
 
         {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
 
-        {/* <Image source={require('./assets/images/cow.png')} /> */}
+        {/* <Image source={require('./assets/images/8196.jpg')} /> */}
         <StatusBar hidden />
       </Fragment>
       // </View>
