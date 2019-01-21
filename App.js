@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Image,
-  Dimensions,
   StatusBar,
   AppRegistry,
   ImageBackground
@@ -19,9 +18,7 @@ import {
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
 import { styles } from './components/stylesheet/styles'
-import Game from './components/Game'
-
-const { width, height } = Dimensions.get('screen')
+import Level2 from './components/Level2'
 
 class HomeScreen extends Component {
   constructor () {
@@ -122,7 +119,7 @@ class GameScreen extends Component {
     return (
       // <View style={{ flex: 1, alignItems: 'start' }}>
       <Fragment>
-        <Game score={this.state.score} />
+        <Level2 score={this.state.score} />
         <Button
           fontFamily='major'
           fontSize={20}

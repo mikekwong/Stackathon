@@ -1,6 +1,8 @@
 import Box from './Box'
 import Matter from 'matter-js'
 
+const { Engine, World, Bodies, Composite } = Matter
+
 let boxIds = 0
 
 const distance = ([x1, y1], [x2, y2]) =>
@@ -9,7 +11,7 @@ const distance = ([x1, y1], [x2, y2]) =>
 const Physics = (state, { touches, time }) => {
   let engine = state['physics'].engine
 
-  Matter.Engine.update(engine, time.delta)
+  Engine.update(engine, time.delta)
 
   return state
 }
@@ -22,24 +24,27 @@ const CreateBox = (state, { touches, screen }) => {
   let randomWidth = Math.floor(Math.random() * 80 + 20)
   let randomHeight = Math.floor(Math.random() * 80 + 20)
 
+  // for bottom half of screen
   touches
     .filter(t => t.type === 'press')
     .forEach(t => {
-      let body = Matter.Bodies.rectangle(
-        t.event.pageX,
-        t.event.pageY,
-        randomWidth,
-        randomHeight,
-        { frictionAir: 0.021 }
-      )
-      Matter.World.add(world, [body])
-
-      state[++boxIds] = {
-        body: body,
-        size: [randomWidth, randomHeight],
-        color: boxIds % 2 === 0 ? '#02D5FF' : '#FF0064',
-        renderer: Box
+      if (t.event.pageY > screen.height / 2 - 100) {
+        let body = Bodies.rectangle(
+          t.event.pageX,
+          t.event.pageY,
+          randomWidth,
+          randomHeight,
+          { frictionAir: 0.021 }
+        )
+        World.add(world, [body])
+        state[++boxIds] = {
+          body: body,
+          size: [randomWidth, randomHeight],
+          color: boxIds % 2 === 0 ? '#02D5FF' : '#FF0064',
+          renderer: Box
+        }
       }
+
       boxCount = Object.keys(state).length
     })
 
@@ -94,12 +99,10 @@ const WinCondition = (state, { touches, screen }) => {
   Object.keys(state)
     .filter(
       key =>
-        state[key].body &&
-        state[key].body.position.y < screen.height / 2 &&
-        state[key].body.position.y > screen.height / 2 - 100
+        state[key].body && state[key].body.position.y < screen.height / 2 - 100
     )
     .forEach(key => {
-      state[key].color = 'gray'
+      state[key].color = 'yellow'
     })
 
   return state
@@ -112,14 +115,11 @@ const GarbageCollection = (state, { touches, screen }) => {
 
   Object.keys(state)
     .filter(
-      key =>
-        state[key].body &&
-        state[key].body.position.y > screen.height &&
-        state[key].body.position.x > screen.width
+      key => state[key].body && state[key].body.position.y > screen.height
     )
     .forEach(key => {
       tossed += 1
-      Matter.Composite.remove(world, state[key].body)
+      Composite.remove(world, state[key].body)
       delete state[key]
     })
 

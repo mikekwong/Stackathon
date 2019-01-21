@@ -19,7 +19,7 @@ export default class Box extends Component {
           width: width,
           height: height,
           transform: [{ rotate: angle + 'rad' }],
-          backgroundColor: this.props.color || 'pink'
+          backgroundColor: this.props.color || ''
         }}
       />
     )
