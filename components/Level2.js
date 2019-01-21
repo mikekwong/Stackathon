@@ -53,8 +53,7 @@ export default class Level2 extends Component {
     super()
     this.state = {
       status: '',
-      discarded: 0,
-      modal: false
+      discarded: 0
     }
   }
 
@@ -63,12 +62,17 @@ export default class Level2 extends Component {
     this.interval = setInterval(() => this.tick(), 100)
   }
 
-  // componentWillUnmount () {
-  //   clearInterval(this.interval)
-  //   World.clear(engine.world)
-  //   Engine.clear(engine)
-  // World.remove(world, [platform, square, floor, ...boxCount])
-  // }
+  componentWillUnmount () {
+    World.remove(world, [platform])
+    clearInterval(this.interval)
+    this.setState({
+      status: '',
+      discarded: 0
+    })
+    //   World.clear(engine.world)
+    //   Engine.clear(engine)
+    // World.remove(world, [platform, square, floor, ...boxCount])
+  }
 
   tick (props) {
     if (
@@ -90,6 +94,7 @@ export default class Level2 extends Component {
       this.setState({
         status: 'You Lost!'
       })
+      this.componentWillUnmount()
     }
     this.setState(state => ({
       discarded: (state.discarded = tossed)
