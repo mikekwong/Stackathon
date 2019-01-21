@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { StyleSheet, Text, View, Image, StatusBar } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  StatusBar,
+  AppRegistry
+} from 'react-native'
 import { Font, Asset, AppLoading } from 'expo'
 import { Button } from 'react-native-elements'
 import {
@@ -11,7 +18,6 @@ import {
 // import GameScreen from './components/Game'
 // import { styles } from './components/styles'
 import Game from './components/Game'
-
 class HomeScreen extends Component {
   constructor () {
     super()
@@ -94,22 +100,21 @@ class GameScreen extends Component {
       // <View style={{ flex: 1, alignItems: 'start' }}>
       <Fragment>
         <Game />
-
-        {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
         <Button
-          fontSize={40}
+          fontSize={20}
           buttonStyle={{
+            position: 'absolute',
             backgroundColor: 'rgba(92, 99,216, 1)',
-            width: 250,
-            height: 100,
+            width: 80,
+            height: 50,
             borderColor: 'transparent',
             borderWidth: 0,
             borderRadius: 5,
-            position: 'relative',
-            top: -600
+            top: -850,
+            left: 20
           }}
           backgroundColor='#841584'
-          title='Exit'
+          title='MENU'
           onPress={() => {
             this.props.navigation.dispatch(
               StackActions.reset({
@@ -119,6 +124,9 @@ class GameScreen extends Component {
             )
           }}
         />
+
+        {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
+
         {/* <Image source={require('./assets/images/cow.png')} /> */}
         <StatusBar hidden />
       </Fragment>
@@ -137,7 +145,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Home',
+    // initialRouteName: 'Home',
     headerMode: 'none',
     navigationOptions: {
       headerVisible: false
@@ -146,3 +154,5 @@ const AppNavigator = createStackNavigator(
 )
 
 export default createAppContainer(AppNavigator)
+
+AppRegistry.registerComponent('App', () => App)
