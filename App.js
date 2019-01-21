@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Image,
+  Dimensions,
   StatusBar,
   AppRegistry,
   ImageBackground
@@ -19,6 +20,9 @@ import {
 // import GameScreen from './components/Game'
 import { styles } from './components/stylesheet/styles'
 import Game from './components/Game'
+
+const { width, height } = Dimensions.get('screen')
+
 class HomeScreen extends Component {
   constructor () {
     super()
@@ -31,7 +35,7 @@ class HomeScreen extends Component {
   async componentDidMount () {
     // load fonts after initial render
     await Font.loadAsync({
-      Stack: require('./assets/fonts/Stack.ttf')
+      major: require('./assets/fonts/major.ttf')
     })
     this.setState({ fontLoaded: true })
   }
@@ -53,28 +57,32 @@ class HomeScreen extends Component {
         style={{
           flex: 1,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          backgroundColor: '#000'
         }}
       >
         {this.state.fontLoaded ? (
           <Fragment>
-            <Text style={styles.title}>STACK-A-THON</Text>
+            <Text style={styles.title1}>STACK</Text>
+            <Text style={styles.title2}>ATHON</Text>
+
             <Button
-              fontFamily='Stack'
-              fontSize={80}
+              fontFamily='major'
+              fontSize={40}
+              color='#000'
               loadingProps={{
                 size: 'large',
-                color: 'rgba(111, 202, 186, 1)'
+                color: '#000'
               }}
               buttonStyle={{
-                backgroundColor: 'rgba(92, 99,216, 1)',
-                width: 250,
-                height: 100,
+                backgroundColor: '#fff',
+                width: 200,
+                height: 80,
                 borderColor: 'transparent',
                 borderWidth: 0,
                 borderRadius: 5
               }}
-              title='Start'
+              title='start'
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.reset({
@@ -93,13 +101,13 @@ class HomeScreen extends Component {
     )
   }
   // async caching action for list of image assets
-  // async _cacheResourcesAsync () {
-  //   const images = [require('./assets/images/8196.jpg')]
-  //   const cacheImages = images.map(image => {
-  //     return Asset.fromModule(image).downloadAsync()
-  //   })
-  //   return Promise.all(cacheImages)
-  // }
+  async _cacheResourcesAsync () {
+    const images = [require('./assets/images/cow.png')]
+    const cacheImages = images.map(image => {
+      return Asset.fromModule(image).downloadAsync()
+    })
+    return Promise.all(cacheImages)
+  }
 }
 
 // Game view
@@ -116,21 +124,21 @@ class GameScreen extends Component {
       <Fragment>
         <Game score={this.state.score} />
         <Button
-          fontFamily='Stack'
-          fontSize={30}
+          fontFamily='major'
+          fontSize={20}
+          color='#FFF'
           buttonStyle={{
             position: 'absolute',
-            backgroundColor: 'black',
-            width: 80,
+            backgroundColor: '#000',
+            width: 90,
             height: 50,
             borderColor: 'transparent',
             borderWidth: 0,
             borderRadius: 5,
-            top: -850,
+            top: -760,
             left: 20
           }}
-          backgroundColor='#841584'
-          title='MENU'
+          title='menu'
           onPress={() => {
             this.props.navigation.dispatch(
               StackActions.reset({

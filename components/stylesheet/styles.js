@@ -1,15 +1,21 @@
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
-  title: {
+  title1: {
     color: '#1BC897',
-    fontSize: 60,
-    fontFamily: 'Stack'
+    fontSize: 80,
+    fontFamily: 'major'
+  },
+  title2: {
+    color: '#1BC897',
+    fontSize: 80,
+    fontFamily: 'major',
+    marginBottom: 40
   },
   red: {
     color: 'red',
     fontSize: 35,
-    fontFamily: 'Stack'
+    fontFamily: 'major'
   },
   container: {
     flex: 1,

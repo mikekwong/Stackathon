@@ -13,17 +13,18 @@ import {
 import Box from './Box'
 import Matter from 'matter-js'
 
-const { Engine, World, Bodies, Body, Events, Composite, Constraint } = Matter
+const { Engine, World, Bodies, Constraint } = Matter
 
 const { width, height } = Dimensions.get('screen')
-const boxSize = Math.trunc(Math.max(width, height) * 0.075)
 
 const engine = Engine.create({ enableSleeping: false })
 const world = engine.world
-const square = Bodies.rectangle(101, 100, boxSize, boxSize, {
+
+const boxSize = Math.trunc(Math.max(width, height) * 0.075)
+const square = Bodies.rectangle(80, 100, boxSize, boxSize, {
   frictionAir: 0.021
 })
-const platform = Bodies.rectangle(100, 200, width / 4, 40, {
+const platform = Bodies.rectangle(80, 200, width / 4, 40, {
   isStatic: true
 })
 const floorWidth = width / 6
@@ -93,7 +94,7 @@ export default class Game extends Component {
   render () {
     return (
       <Fragment>
-        <Text style={{ fontSize: 20, left: 190, top: 80 }}>
+        <Text style={{ fontSize: 20, left: 150, top: 80 }}>
           {this.state.win} Discarded: {this.state.discarded}
         </Text>
         <GameEngine
