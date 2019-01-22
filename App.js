@@ -66,7 +66,7 @@ class HomeScreen extends Component {
             <Text style={styles.subhead}>- pick your stack -</Text>
             <Button
               fontFamily='major'
-              fontSize={18}
+              fontSize={20}
               color='#000'
               loadingProps={{
                 size: 'large',
@@ -81,7 +81,7 @@ class HomeScreen extends Component {
                 borderWidth: 0,
                 borderRadius: 5
               }}
-              title='start easy'
+              title='easy'
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.reset({
@@ -95,7 +95,7 @@ class HomeScreen extends Component {
             />
             <Button
               fontFamily='major'
-              fontSize={18}
+              fontSize={20}
               color='#000'
               loadingProps={{
                 size: 'large',
@@ -109,7 +109,7 @@ class HomeScreen extends Component {
                 borderWidth: 0,
                 borderRadius: 5
               }}
-              title='start medium'
+              title='medium'
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.reset({

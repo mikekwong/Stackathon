@@ -29,7 +29,7 @@ const square = Bodies.rectangle(60, 400, boxSize, boxSize, {
 const platform = Bodies.rectangle(60, 500, width / 4, 40, {
   isStatic: true
 })
-const floorWidth = width / 1.25
+const floorWidth = width / 3
 const floorHeight = boxSize * 3
 const floor = Bodies.rectangle(
   width / 2,
@@ -201,7 +201,7 @@ export default class Level1 extends Component {
             },
             floor: {
               body: floor,
-              size: [floorWidth / 1.25, floorHeight],
+              size: [floorWidth, floorHeight],
               color: '#000',
               renderer: Box
             }
