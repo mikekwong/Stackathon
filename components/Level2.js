@@ -85,6 +85,7 @@ export default class Level2 extends Component {
         status: 'You Won!',
         score: this.props.score + 1
       })
+      // this.componentWillUnmount()
     } else if (
       square.position.y > height ||
       !lives ||
