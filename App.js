@@ -60,8 +60,8 @@ class HomeScreen extends Component {
       >
         {this.state.fontLoaded ? (
           <Fragment>
-            <Text style={styles.title1}>STACK</Text>
-            <Text style={styles.title2}>ATHON</Text>
+            <Text style={styles.title1}>stack</Text>
+            <Text style={styles.title2}>athon</Text>
 
             <Button
               fontFamily='major'
@@ -122,15 +122,15 @@ class GameScreen extends Component {
         <Level2 score={this.state.score} />
         <Button
           fontFamily='major'
-          fontSize={20}
-          color='#FFF'
+          color='black'
+          fontSize={22}
           buttonStyle={{
             position: 'absolute',
-            backgroundColor: '#000',
+            backgroundColor: '#FFF',
             width: 90,
             height: 50,
-            borderColor: 'transparent',
-            borderWidth: 0,
+            borderColor: 'black',
+            borderWidth: 1,
             borderRadius: 5,
             top: -760,
             left: 20

@@ -16,7 +16,7 @@ const Physics = (state, { touches, time }) => {
   return state
 }
 
-let boxCount = 0
+let worldBoxes = 0
 
 const CreateBox = (state, { touches, screen }) => {
   let world = state['physics'].world
@@ -45,7 +45,7 @@ const CreateBox = (state, { touches, screen }) => {
         }
       }
 
-      boxCount = Object.keys(state).length
+      worldBoxes = Object.keys(state)
     })
 
   return state
@@ -102,7 +102,7 @@ const WinCondition = (state, { touches, screen }) => {
         state[key].body && state[key].body.position.y < screen.height / 2 - 100
     )
     .forEach(key => {
-      state[key].color = 'yellow'
+      state[key].color = 'black'
     })
 
   return state
@@ -132,6 +132,7 @@ export {
   MoveBox,
   WinCondition,
   GarbageCollection,
-  boxCount,
+  worldBoxes,
+  boxIds,
   tossed
 }

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { View, Text, Dimensions, AppRegistry } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { GameEngine } from 'react-native-game-engine'
 import {
   Physics,
@@ -7,7 +8,8 @@ import {
   MoveBox,
   WinCondition,
   GarbageCollection,
-  boxCount,
+  boxIds,
+  worldBoxes,
   tossed
 } from './Systems'
 import Box from './entities/Box'
@@ -63,46 +65,46 @@ export default class Level2 extends Component {
   }
 
   componentWillUnmount () {
-    World.remove(world, [platform])
+    // World.remove(world, [platform])
     clearInterval(this.interval)
     this.setState({
       status: '',
       discarded: 0
     })
-    //   World.clear(engine.world)
-    //   Engine.clear(engine)
-    // World.remove(world, [platform, square, floor, ...boxCount])
+    // World.clear(engine.world)
+    // Engine.clear(engine)
+    World.remove(world, [platform, square, floor, ...worldBoxes])
   }
 
   tick (props) {
-    if (
-      square.position.y < height / 2 &&
-      this.state.discarded < 4 &&
-      boxCount > 5
-    ) {
+    // lives keeps track if you go beyond 0 tosses left to trigger loss
+    let lives = 6 - tossed
+    let stackCheck = boxIds - tossed
+    if (square.position.y < height / 2 && lives && stackCheck > 5) {
       this.setState({
         status: 'You Won!',
         score: this.props.score + 1
       })
     } else if (
       square.position.y > height ||
-      this.state.discarded > 4 ||
-      (this.state.discarded > 4 &&
-        square.position.y > height / 2 &&
-        boxCount < 5)
+      !lives ||
+      (!lives && square.position.y > height / 2 && stackCheck < 5)
     ) {
       this.setState({
         status: 'You Lost!'
       })
-      this.componentWillUnmount()
+      // this.componentWillUnmount()
     }
-    this.setState(state => ({
-      discarded: (state.discarded = tossed)
-    }))
-    // if (square.position.x > 60 && square.position.y > 300) {
-    //   Composite.remove(world, [platform])
-    // }
-    // if (this.state.discarded === 4) {
+    if (lives >= 0) {
+      this.setState(state => ({
+        discarded: (state.discarded = lives)
+      }))
+    }
+    // platform removed
+    if (square.position.x > 60 && square.position.y > 400) {
+      Composite.remove(world, [platform])
+    }
+    // if (lives === 0) {
     //   this.componentWillUnmount()
     // }
   }
@@ -114,20 +116,54 @@ export default class Level2 extends Component {
   render () {
     return (
       <Fragment>
-        <View style={{ position: 'absolute' }}>
-          <Text style={{ fontSize: 20, left: 150, top: 80 }}>
-            Max discards allowed: 5
+        <View
+          style={{
+            position: 'absolute',
+            height: 1000,
+            width: 500
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 26,
+              fontWeight: 'bold',
+              color: 'gray',
+              left: 320,
+              top: 60
+            }}
+          >
+            {this.state.discarded}
           </Text>
-          <Text style={{ fontSize: 20, left: 150, top: 100 }}>
-            Discarded: {this.state.discarded}
-          </Text>
-          <Text style={{ fontSize: 80, left: 35, top: 250 }}>
+          <View style={{ position: ' absolute', top: 32, left: 50 }}>
+            <Icon name='heart' type='font-awesome' color='#f50' />
+          </View>
+          {boxIds > 0 && (
+            <Text
+              style={{
+                fontSize: 90,
+                left: 165,
+                top: 120,
+                color: 'rgba(0, 0, 0, .2)'
+              }}
+            >
+              {boxIds}
+            </Text>
+          )}
+
+          <Text style={{ fontSize: 80, left: 35, top: 150 }}>
             {this.state.status}
           </Text>
 
           {square.position.x > 60 ? null : (
-            <Text style={{ fontSize: 15, left: 20, top: 440 }}>
-              Stack this box to Win! If you drop it, you lose!
+            <Text
+              style={{
+                position: 'absolute',
+                fontSize: 15,
+                left: 110,
+                top: 430
+              }}
+            >
+              Stack this box to Win!{'\n'}If you drop it, you lose!
             </Text>
           )}
         </View>
@@ -152,7 +188,7 @@ export default class Level2 extends Component {
               body: square,
               size: [boxSize, boxSize],
               color: '',
-              borderWidth: 20,
+              borderWidth: 15,
               borderColor: '#1BC897',
               renderer: Box
             },
