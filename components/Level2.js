@@ -146,7 +146,7 @@ export default class Level2 extends Component {
             <Text
               style={{
                 fontSize: 90,
-                left: 165,
+                left: 160,
                 top: 120,
                 color: 'rgba(0, 0, 0, .2)'
               }}
@@ -155,7 +155,9 @@ export default class Level2 extends Component {
             </Text>
           )}
 
-          <Text style={{ fontSize: 80, left: 35, top: 150 }}>
+          <Text
+            style={{ position: 'absolute', fontSize: 80, left: 35, top: 290 }}
+          >
             {this.state.status}
           </Text>
 
