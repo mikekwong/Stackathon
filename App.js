@@ -18,6 +18,7 @@ import {
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
 import { styles } from './components/stylesheet/styles'
+import Level1 from './components/Level1'
 import Level2 from './components/Level2'
 
 class HomeScreen extends Component {
@@ -62,10 +63,38 @@ class HomeScreen extends Component {
           <Fragment>
             <Text style={styles.title1}>stack</Text>
             <Text style={styles.title2}>athon</Text>
-
             <Button
               fontFamily='major'
-              fontSize={40}
+              fontSize={18}
+              color='#000'
+              loadingProps={{
+                size: 'large',
+                color: '#000'
+              }}
+              buttonStyle={{
+                backgroundColor: '#fff',
+                marginBottom: 20,
+                width: 200,
+                height: 60,
+                borderColor: 'transparent',
+                borderWidth: 0,
+                borderRadius: 5
+              }}
+              title='start easy'
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  StackActions.reset({
+                    index: 0,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'Game1' })
+                    ]
+                  })
+                )
+              }}
+            />
+            <Button
+              fontFamily='major'
+              fontSize={18}
               color='#000'
               loadingProps={{
                 size: 'large',
@@ -74,18 +103,18 @@ class HomeScreen extends Component {
               buttonStyle={{
                 backgroundColor: '#fff',
                 width: 200,
-                height: 80,
+                height: 60,
                 borderColor: 'transparent',
                 borderWidth: 0,
                 borderRadius: 5
               }}
-              title='start'
+              title='start medium'
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.reset({
                     index: 0,
                     actions: [
-                      NavigationActions.navigate({ routeName: 'Game' })
+                      NavigationActions.navigate({ routeName: 'Game2' })
                     ]
                   })
                 )
@@ -108,18 +137,55 @@ class HomeScreen extends Component {
 }
 
 // Game view
-class GameScreen extends Component {
-  constructor () {
-    super()
-    this.state = {
-      score: 0
-    }
-  }
+class GameScreenLevel1 extends Component {
   render () {
     return (
       // <View style={{ flex: 1, alignItems: 'start' }}>
       <Fragment>
-        <Level2 score={this.state.score} />
+        <Level1 />
+        <Button
+          fontFamily='major'
+          color='black'
+          fontSize={22}
+          buttonStyle={{
+            position: 'absolute',
+            backgroundColor: '#FFF',
+            width: 90,
+            height: 50,
+            borderColor: 'black',
+            borderWidth: 1,
+            borderRadius: 5,
+            top: -760,
+            left: 20
+          }}
+          title='menu'
+          onPress={() => {
+            this.props.navigation.dispatch(
+              StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Home' })]
+              })
+            )
+          }}
+        />
+
+        {/* <Text style={styles.blue}>Go To Home Screen</Text> */}
+
+        {/* <Image source={require('./assets/images/8196.jpg')} /> */}
+        <StatusBar hidden />
+      </Fragment>
+      // </View>
+    )
+  }
+}
+
+// Game view
+class GameScreenLevel2 extends Component {
+  render () {
+    return (
+      // <View style={{ flex: 1, alignItems: 'start' }}>
+      <Fragment>
+        <Level2 />
         <Button
           fontFamily='major'
           color='black'
@@ -161,8 +227,11 @@ const AppNavigator = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
-    Game: {
-      screen: GameScreen
+    Game1: {
+      screen: GameScreenLevel1
+    },
+    Game2: {
+      screen: GameScreenLevel2
     }
   },
   {
@@ -176,4 +245,4 @@ const AppNavigator = createStackNavigator(
 
 export default createAppContainer(AppNavigator)
 
-AppRegistry.registerComponent('App', () => App)
+AppRegistry.registerComponent('HomeScreen', () => HomeScreen)

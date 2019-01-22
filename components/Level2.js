@@ -11,7 +11,7 @@ import {
   boxIds,
   worldBoxes,
   tossed
-} from './Systems'
+} from './Systems2'
 import Box from './entities/Box'
 import Matter from 'matter-js'
 
@@ -73,7 +73,7 @@ export default class Level2 extends Component {
     })
     // World.clear(engine.world)
     // Engine.clear(engine)
-    World.remove(world, [platform, square, floor, ...worldBoxes])
+    // World.remove(world, [platform, square, floor, ...worldBoxes])
   }
 
   tick (props) {
@@ -161,7 +161,7 @@ export default class Level2 extends Component {
             {this.state.status}
           </Text>
 
-          {square.position.x > 60 || square.position.y > height ? null : (
+          {boxIds ? null : (
             <Text
               style={{
                 position: 'absolute',
