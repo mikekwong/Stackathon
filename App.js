@@ -18,8 +18,8 @@ import {
 } from 'react-navigation' // Version can be specified in package.json
 // import GameScreen from './components/Game'
 import { styles } from './components/stylesheet/styles'
-import Level1 from './components/Level1'
-import Level2 from './components/Level2'
+import Level1 from './components/Level1/Level1'
+import Level2 from './components/Level2/Level2'
 
 class HomeScreen extends Component {
   constructor () {
@@ -63,6 +63,7 @@ class HomeScreen extends Component {
           <Fragment>
             <Text style={styles.title1}>stack</Text>
             <Text style={styles.title2}>athon</Text>
+            <Text style={styles.subhead}>- pick your stack -</Text>
             <Button
               fontFamily='major'
               fontSize={18}

@@ -11,8 +11,8 @@ import {
   boxIds,
   worldBoxes,
   tossed
-} from './Systems2'
-import Box from './entities/Box'
+} from './Systems1'
+import Box from '../entities/Box'
 import Matter from 'matter-js'
 
 const { Engine, World, Bodies, Constraint, Composite } = Matter
@@ -29,7 +29,7 @@ const square = Bodies.rectangle(60, 400, boxSize, boxSize, {
 const platform = Bodies.rectangle(60, 500, width / 4, 40, {
   isStatic: true
 })
-const floorWidth = width / 6
+const floorWidth = width / 1.25
 const floorHeight = boxSize * 3
 const floor = Bodies.rectangle(
   width / 2,
@@ -50,7 +50,7 @@ const constraint = Constraint.create({
 World.add(world, [platform, square, floor])
 World.addConstraint(world, constraint)
 
-export default class Level2 extends Component {
+export default class Level1 extends Component {
   constructor () {
     super()
     this.state = {
@@ -78,9 +78,9 @@ export default class Level2 extends Component {
 
   tick (props) {
     // lives keeps track if you go beyond 0 tosses left to trigger loss
-    let lives = 6 - tossed
+    let lives = 3 - tossed
     let stackCheck = boxIds - tossed
-    if (square.position.y < height / 2 && lives && stackCheck > 5) {
+    if (square.position.y < 200 && lives && stackCheck > 7) {
       if (this.state.status !== 'You Lost!') {
         this.setState({
           status: 'You Won!',
@@ -201,7 +201,7 @@ export default class Level2 extends Component {
             },
             floor: {
               body: floor,
-              size: [floorWidth, floorHeight],
+              size: [floorWidth / 1.25, floorHeight],
               color: '#000',
               renderer: Box
             }
@@ -212,4 +212,4 @@ export default class Level2 extends Component {
   }
 }
 
-AppRegistry.registerComponent('Level2', () => Level2)
+AppRegistry.registerComponent('Level1', () => Level1)

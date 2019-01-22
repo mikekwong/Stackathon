@@ -12,10 +12,11 @@ export const styles = StyleSheet.create({
     fontFamily: 'major',
     marginBottom: 40
   },
-  red: {
-    color: 'red',
-    fontSize: 35,
-    fontFamily: 'major'
+  subhead: {
+    color: '#FFF',
+    fontSize: 15,
+    fontFamily: 'major',
+    marginBottom: 40
   },
   container: {
     flex: 1,

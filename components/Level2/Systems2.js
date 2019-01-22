@@ -1,4 +1,4 @@
-import Box from './Box'
+import Box from '../Box'
 import Matter from 'matter-js'
 
 const { Engine, World, Bodies, Composite } = Matter
@@ -21,24 +21,28 @@ let worldBoxes = 0
 const CreateBox = (state, { touches, screen }) => {
   let world = state['physics'].world
   let boxSize = Math.trunc(Math.max(screen.width, screen.height) * 0.075)
+  let randomWidth = Math.floor(Math.random() * 80 + 20)
+  let randomHeight = Math.floor(Math.random() * 80 + 20)
 
   // for bottom half of screen
   touches
     .filter(t => t.type === 'press')
     .forEach(t => {
-      let body = Bodies.rectangle(
-        t.event.pageX,
-        t.event.pageY,
-        boxSize,
-        boxSize,
-        { frictionAir: 0.021 }
-      )
-      World.add(world, [body])
-      state[++boxIds] = {
-        body: body,
-        size: [boxSize, boxSize],
-        color: boxIds % 2 === 0 ? '#02D5FF' : '#FF0064',
-        renderer: Box
+      if (t.event.pageY > screen.height / 2 - 100) {
+        let body = Bodies.rectangle(
+          t.event.pageX,
+          t.event.pageY,
+          randomWidth,
+          randomHeight,
+          { frictionAir: 0.021 }
+        )
+        World.add(world, [body])
+        state[++boxIds] = {
+          body: body,
+          size: [randomWidth, randomHeight],
+          color: boxIds % 2 === 0 ? '#02D5FF' : '#FF0064',
+          renderer: Box
+        }
       }
 
       worldBoxes = Object.keys(state)
@@ -93,7 +97,10 @@ const WinCondition = (state, { touches, screen }) => {
   let world = state['physics'].world
 
   Object.keys(state)
-    .filter(key => state[key].body && state[key].body.position.y < 200)
+    .filter(
+      key =>
+        state[key].body && state[key].body.position.y < screen.height / 2 - 100
+    )
     .forEach(key => {
       state[key].color = 'black'
     })
