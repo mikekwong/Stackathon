@@ -81,20 +81,24 @@ export default class Level2 extends Component {
     let lives = 6 - tossed
     let stackCheck = boxIds - tossed
     if (square.position.y < height / 2 && lives && stackCheck > 5) {
-      this.setState({
-        status: 'You Won!',
-        score: this.props.score + 1
-      })
-      // this.componentWillUnmount()
+      if (this.state.status !== 'You Lost!') {
+        this.setState({
+          status: 'You Won!',
+          score: this.props.score + 1
+        })
+        // this.componentWillUnmount()
+      }
     } else if (
       square.position.y > height ||
       !lives ||
       (!lives && square.position.y > height / 2 && stackCheck < 5)
     ) {
-      this.setState({
-        status: 'You Lost!'
-      })
-      // this.componentWillUnmount()
+      if (this.state.status !== 'You Won!') {
+        this.setState({
+          status: 'You Lost!'
+        })
+        // this.componentWillUnmount()
+      }
     }
     if (lives >= 0) {
       this.setState(state => ({
@@ -155,7 +159,7 @@ export default class Level2 extends Component {
             {this.state.status}
           </Text>
 
-          {square.position.x > 60 ? null : (
+          {square.position.x > 60 || square.position.y > height ? null : (
             <Text
               style={{
                 position: 'absolute',
