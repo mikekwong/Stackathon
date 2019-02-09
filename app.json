@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Bopper",
-    "slug": "Bopper",
+    "name": "Stackathon",
+    "slug": "Stackathon",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],

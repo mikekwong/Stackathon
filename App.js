@@ -61,8 +61,8 @@ class HomeScreen extends Component {
       >
         {this.state.fontLoaded ? (
           <Fragment>
-            <Text style={styles.title1}>stack</Text>
-            <Text style={styles.title2}>athon</Text>
+            <Text style={styles.title1}>STACK</Text>
+            <Text style={styles.title2}>ATHON</Text>
             <Text style={styles.subhead}>- pick your stack -</Text>
             <Button
               fontFamily='major'
