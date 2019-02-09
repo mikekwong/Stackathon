@@ -1,22 +1,28 @@
 {
   "expo": {
     "name": "Stackathon",
+    "description": "A mobile based drag and drop blocks physics puzzle game – easy to learn yet tricky to win.",
     "slug": "Stackathon",
     "privacy": "public",
     "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    // "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      // "image": "./assets/images/owl.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#C0C0C0"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     }

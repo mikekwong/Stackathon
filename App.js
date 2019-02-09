@@ -129,7 +129,7 @@ class HomeScreen extends Component {
   }
   // async caching action for list of image assets
   async _cacheResourcesAsync () {
-    const images = [require('./assets/images/cow.png')]
+    const images = [require('./assets/images/icon.png')]
     const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync()
     })
