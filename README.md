@@ -1,7 +1,7 @@
 # Stackathon
 
 A tricky to win but easy to learn physics based block stacking game.
-A mobile app utilizing React Native, Matter.js, React Native Game Engine
+A mobile app utilizing React Native, Matter.js, and React Native Game Engine (RNGE)
 
 ## Getting Started
 
@@ -9,17 +9,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install all required dependencies:
+Install all required dependencies.
 
-```
 To run the Expo simulator on Mac, you need to have the latest version of XCode installed and set your device simulator to be iPhone X.
 
 Alternatively you can download the Expo app from the app store and let your phone's camera scan the QR Code from the expo localhost web server after it's started.
-```
 
 ### Installing
-
-A step by step series of examples that tell you how to get a development env running
 
 First install all the required dependencies
 
@@ -29,9 +25,9 @@ npm install
 
 ## Running the game
 
-Explain how to run the automated tests for this system
+How to run the game.
 
-### Break down into end to end tests
+### Run on your local machine
 
 To run the simulator:
 
