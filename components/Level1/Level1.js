@@ -10,7 +10,7 @@ import {
   GarbageCollection,
   boxIds,
   worldBoxes,
-  tossed
+  tossed,
 } from './Systems1'
 import Box from '../entities/Box'
 import Matter from 'matter-js'
@@ -24,10 +24,10 @@ const world = engine.world
 
 const boxSize = Math.trunc(Math.max(width, height) * 0.075)
 const square = Bodies.rectangle(60, 400, boxSize, boxSize, {
-  frictionAir: 0.021
+  frictionAir: 0.021,
 })
 const platform = Bodies.rectangle(60, 500, width / 4, 40, {
-  isStatic: true
+  isStatic: true,
 })
 const floorWidth = width / 3
 const floorHeight = boxSize * 3
@@ -44,39 +44,39 @@ const constraint = Constraint.create({
   pointB: { x: 0, y: 0 },
   length: 0.01,
   stiffness: 0.1,
-  angularStiffness: 1
+  angularStiffness: 1,
 })
 
 World.add(world, [platform, square, floor])
 World.addConstraint(world, constraint)
 
 export default class Level1 extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       status: '',
-      discarded: 0
+      discarded: 0,
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Events.on(engine, 'afterUpdate', function() { ... });
     this.interval = setInterval(() => this.tick(), 100)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // World.remove(world, [platform])
     clearInterval(this.interval)
     this.setState({
       status: '',
-      discarded: 0
+      discarded: 0,
     })
     // World.clear(engine.world)
     // Engine.clear(engine)
     // World.remove(world, [platform, square, floor, ...worldBoxes])
   }
 
-  tick (props) {
+  tick(props) {
     // lives keeps track if you go beyond 0 tosses left to trigger loss
     let lives = 3 - tossed
     let stackCheck = boxIds - tossed
@@ -84,7 +84,7 @@ export default class Level1 extends Component {
       if (this.state.status !== 'You Lost!') {
         this.setState({
           status: 'You Won!',
-          score: this.props.score + 1
+          score: this.props.score + 1,
         })
         // this.componentWillUnmount()
       }
@@ -95,14 +95,14 @@ export default class Level1 extends Component {
     ) {
       if (this.state.status !== 'You Won!') {
         this.setState({
-          status: 'You Lost!'
+          status: 'You Lost!',
         })
         // this.componentWillUnmount()
       }
     }
     if (lives >= 0) {
       this.setState(state => ({
-        discarded: (state.discarded = lives)
+        discarded: (state.discarded = lives),
       }))
     }
     // platform removed
@@ -114,18 +114,18 @@ export default class Level1 extends Component {
     // }
   }
 
-  setModal (visible) {
+  setModal(visible) {
     this.setState({ modalVisible: visible })
   }
 
-  render () {
+  render() {
     return (
       <Fragment>
         <View
           style={{
             position: 'absolute',
             height: 1000,
-            width: 500
+            width: 500,
           }}
         >
           <Text
@@ -134,13 +134,13 @@ export default class Level1 extends Component {
               fontWeight: 'bold',
               color: 'gray',
               left: 320,
-              top: 60
+              top: 60,
             }}
           >
             {this.state.discarded}
           </Text>
           <View style={{ position: ' absolute', top: 32, left: 50 }}>
-            <Icon name='heart' type='font-awesome' color='#f50' />
+            <Icon name="heart" type="font-awesome" color="#f50" />
           </View>
           {boxIds > 0 && (
             <Text
@@ -148,7 +148,7 @@ export default class Level1 extends Component {
                 fontSize: 90,
                 left: 160,
                 top: 120,
-                color: 'rgba(0, 0, 0, .2)'
+                color: 'rgba(0, 0, 0, .2)',
               }}
             >
               {boxIds}
@@ -167,7 +167,7 @@ export default class Level1 extends Component {
                 position: 'absolute',
                 fontSize: 15,
                 left: 110,
-                top: 430
+                top: 430,
               }}
             >
               Stack this box to Win!{'\n'}If you drop it, you lose!
@@ -181,7 +181,7 @@ export default class Level1 extends Component {
             CreateBox,
             MoveBox,
             WinCondition,
-            GarbageCollection
+            GarbageCollection,
           ]}
           entities={{
             physics: { engine: engine, world: world, constraint: constraint },
@@ -189,22 +189,22 @@ export default class Level1 extends Component {
               body: platform,
               size: [width / 4, 40],
               color: '',
-              renderer: Box
+              renderer: Box,
             },
             square: {
               body: square,
               size: [boxSize, boxSize],
               color: '',
               borderWidth: 15,
-              borderColor: '#1BC897',
-              renderer: Box
+              borderColor: '#5941FF',
+              renderer: Box,
             },
             floor: {
               body: floor,
               size: [floorWidth, floorHeight],
               color: '#000',
-              renderer: Box
-            }
+              renderer: Box,
+            },
           }}
         />
       </Fragment>
